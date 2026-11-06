@@ -1,2 +1,12 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normalize line endings to LF in the repo, so Windows, Linux containers and fuzzing boxes all see the same bytes.
+# A Bash script checked out with CRLF fails on a Linux box with "bad interpreter", so this matters here.
+* text=auto eol=lf
+
+# Windows-only scripts keep CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Fuzzer inputs, corpora and crash reproducers are raw bytes: never touch their line endings.
+*.bin binary
+corpus/** binary
+crashes/** binary
