@@ -215,6 +215,9 @@ def minimize_corpus(corpus_directory, output_directory):
 ### PowerShell
 
 - **Start with `#Requires -Version 7.0`, `$ErrorActionPreference = 'Stop'` and `Set-StrictMode -Version Latest`.**
+- **Except bootstrap scripts that run on a fresh Windows,** which only has Windows PowerShell 5.1: those use
+  `#Requires -Version 5.1` and `Set-StrictMode -Version 2.0`, no PowerShell 7 syntax (`??`, ternaries, `&&`), and
+  plain ASCII only, since 5.1 reads a file without a byte order mark in the ANSI code page.
 - **Check native commands' exit codes,** since `Stop` doesn't cover them; use a small `Invoke-Native` helper that
   throws on a nonzero `$LASTEXITCODE`.
 - **Find the repo root from `$PSScriptRoot`.**
